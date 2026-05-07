@@ -18,9 +18,6 @@ This full-stack application serves as a "Trend Sensor," bridging the gap between
 - **Interactive Drill-down:** Clickable product cards providing deep-dive performance analysis.
 
 ## 📸 Screenshots
- 
-## 📸 Screenshots
-
 <p align="center">
   <b>GSP Dashboard & Strategic Trend Analysis</b><br>
   <img src="screenshots/dashboard.png" width="45%" />
@@ -29,6 +26,7 @@ This full-stack application serves as a "Trend Sensor," bridging the gap between
   <img src="screenshots/chart2.png" width="45%" />
   <img src="screenshots/chart3.png" width="45%" />
 </p>
+
 ## ⚙️ Installation
 1. Clone the repository.
 2. Run the Spring Boot backend (`./mvnw spring-boot:run`).
