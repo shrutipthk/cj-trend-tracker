@@ -19,14 +19,16 @@ This full-stack application serves as a "Trend Sensor," bridging the gap between
 
 ## 📸 Screenshots
  
-### Dashboard Overview
-![Main Dashboard](screenshots/dashboard.png)
+## 📸 Screenshots
 
-### Dynamic Growth Analytics
-![Trend Chart 1](screenshots/chart1.png)
-![Trend Chart 2](screenshots/chart2.png)
-![Trend Chart 3](screenshots/chart3.png)
-
+<p align="center">
+  <b>GSP Dashboard & Strategic Trend Analysis</b><br>
+  <img src="screenshots/dashboard.png" width="45%" />
+  <img src="screenshots/chart1.png" width="45%" />
+  <br>
+  <img src="screenshots/chart2.png" width="45%" />
+  <img src="screenshots/chart3.png" width="45%" />
+</p>
 ## ⚙️ Installation
 1. Clone the repository.
 2. Run the Spring Boot backend (`./mvnw spring-boot:run`).
