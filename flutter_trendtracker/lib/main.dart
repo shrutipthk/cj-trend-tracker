@@ -33,6 +33,67 @@ class _TrendDashboardState extends State<TrendDashboard> {
       throw Exception('Connection Error');
     }
   }
+  void _showGrowthChart(BuildContext context, dynamic trend) {
+
+  final Map<String, dynamic> data = Map<String, dynamic>.from(trend);
+  final String itemName = data['trend_item']?.toString() ?? "Unknown Product";
+  double finalGrowth = double.tryParse(trend['growth_rate'].toString().replaceAll(RegExp(r'[^0-9.]'), '')) ?? 5.0;
+  int seed = trend['trend_item'].toString().length;
+
+  double rawGrowth = double.tryParse(data['growth_rate'].toString().replaceAll(RegExp(r'[^0-9.]'), '')) ?? 5.0;
+  double displayGrowth = (rawGrowth / 10).clamp(3.0, 10.0);
+  double chartCeiling = 12.0;
+
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
+    builder: (context) => Container(
+      padding: const EdgeInsets.all(24),
+      height: 400,
+      child: Column(
+        children: [
+          Text("${trend['trend_item']} Trend", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 30),
+          Expanded(
+            child: LineChart(
+              LineChartData(
+                minY: 0, 
+                maxY: chartCeiling,
+                minX: 0,
+                maxX: 4,
+                lineBarsData: [
+                  LineChartBarData(
+                    spots: [
+                      FlSpot(0, (1.0 + (seed % 2)).toDouble()),
+                      FlSpot(1, (2.0 + (seed % 3)).toDouble()), 
+                      FlSpot(2, (1.5 + (seed % 2)).toDouble()),
+                      FlSpot(3, displayGrowth - 2), 
+                      FlSpot(4, displayGrowth),
+                    ],
+                    isCurved: true,
+                    color: const Color(0xFF004B91),
+                    barWidth: 4,
+                    dotData: const FlDotData(show: true), 
+                    belowBarData: BarAreaData(
+                      show: true, 
+                      color: const Color(0xFF004B91).withOpacity(0.1)
+                    ),
+                  ),
+                ],
+                titlesData: const FlTitlesData(show: false),
+                gridData: const FlGridData(show: false),
+                borderData: FlBorderData(show: false),
+              ),
+            ),
+          ),
+          Text("Official GSP Growth: ${trend['growth_rate']}", 
+               style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold)),
+        ],
+      ),
+    ),
+  );
+}
  
   @override
   Widget build(BuildContext context) {
@@ -83,7 +144,10 @@ class _TrendDashboardState extends State<TrendDashboard> {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 var trend = snapshot.data![index];
-                return Card(
+                return InkWell(
+                  onTap: () => {_showGrowthChart(context, trend)},
+                  borderRadius: BorderRadius.circular(12),
+                  child: Card(
                   elevation: 5,
                   margin: EdgeInsets.symmetric(vertical: 8),
                   child: ListTile(
@@ -101,6 +165,7 @@ class _TrendDashboardState extends State<TrendDashboard> {
                       ],
                     ),
                   ),
+                  )
                 );
               },
             );
